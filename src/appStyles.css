@@ -1,0 +1,44 @@
+*{
+    background: rgba(12, 198, 247, 1);
+    font-family: Arial, Helvetica, sans-serif;
+}
+.center-container{
+    display: flex;
+    justify-content: center;
+}
+
+h1 {
+    color: aliceblue;
+    font-size: 50px;
+}
+
+p {
+    color:rgba(0, 60, 151, 1);
+    size: 16px;   
+}
+
+.button {
+    font-size: 18px;
+    border: none;
+    border-radius: 20px;
+    margin: 16px;
+}
+.button.primary{
+    background-color:rgba(0, 60, 151, 1);
+    color: aliceblue;
+    padding: 10px 40px;
+}
+.button.secondary{
+    background-color:transparent;
+    color: rgba(0, 60, 151, 1);
+    border: 2px rgba(0, 60, 151, 1) solid;
+    padding: 10px 20px;
+}
+
+.button:hover{
+    transform: scale(1.02); 
+}
+.secondary-button-container{
+    display: flex;
+    justify-content: center
+}

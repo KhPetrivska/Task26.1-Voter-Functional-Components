@@ -1,0 +1,33 @@
+.em-container{
+    display: flex;
+    justify-content: center;
+}
+
+p{
+    font-size: 18px;
+}
+
+.em-img{
+    height: 160px;
+    margin: 0px 0px 8px;
+}
+.em-img:hover{
+    transform: scale(1.02); 
+
+}
+.em-counter-img{
+    flex-direction: column;
+    display: flex;
+   align-items: center;
+ 
+}
+.em-counter{
+    font-family: Arial, Helvetica, sans-serif ;
+    font-size: 25px;
+    color: aliceblue;
+    background-color: none;
+
+}
+.em-counter p{
+    margin: 0px;
+}
