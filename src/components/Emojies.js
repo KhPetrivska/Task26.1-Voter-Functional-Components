@@ -1,5 +1,4 @@
-import React from "react";
-import reactDom from "react-dom";
+import React, { useState, useEffect } from "react";
 
 import angryEm from "../img/angry.png";
 import elatedEm from "../img/elated.png";
@@ -8,84 +7,77 @@ import happyEm from "../img/happy.png";
 import sherlockEm from "../img/sherlock.png";
 import "./emojiesStyles.css";
 
-export default class Emojies extends React.Component {
-  constructor(props) {
-    super(props);
-    const savedCounts = localStorage.getItem("emojiCounter");
-    const count = savedCounts
-      ? JSON.parse(savedCounts)
-      : {
+const Emojies = () => {
+  const savedCounts = localStorage.getItem("emojiCounter");
+  const count =
+    !savedCounts || savedCounts === "undefined"
+      ? {
           angry: 0,
           elated: 0,
           french: 0,
           happy: 0,
           sherlock: 0,
-        };
-    this.state = { count };
-  }
+        }
+      : JSON.parse(savedCounts);
 
-  onClick = (emoji) => {
-    this.setState(
-      (prevState) => ({
-        count: { ...prevState.count, [emoji]: prevState.count[emoji] + 1 },
-      }),
-      () => {
-        localStorage.setItem("emojiCounter", JSON.stringify(this.state.count));
-      }
-    );
+  const [counter, setCounter] = useState(count);
+
+  useEffect(() => {
+    localStorage.setItem("emojiCounter", JSON.stringify(counter));
+  }, [counter]);
+
+  const increment = (emoji) => {
+    setCounter((prevCounter) => ({
+      ...prevCounter,
+      [emoji]: prevCounter[emoji] + 1,
+    }));
   };
-  clearResults = () => {
-    const newCount = {
+
+  const clearResults = () => {
+    const newcount = {
       angry: 0,
       elated: 0,
       french: 0,
       happy: 0,
       sherlock: 0,
     };
-    this.setState({ count: newCount }, () => {
-      localStorage.setItem("emojiCounter", JSON.stringify(newCount));
-    });
+    setCounter(newcount);
+    localStorage.setItem("emojiCounter", JSON.stringify(newcount));
   };
 
-  render() {
-    const smiles = [
-      { name: "angry", src: angryEm },
-      { name: "elated", src: elatedEm },
-      { name: "french", src: frenchEm },
-      { name: "happy", src: happyEm },
-      { name: "sherlock", src: sherlockEm },
-    ];
-    // this.state = {
-    //   count: smiles.reduce((prevCount, { name }) => {
-    //     prevCount[name] = 0;
-    //     return prevCount;
-    //   }, {}),
-    // };
+  const smiles = [
+    { name: "angry", src: angryEm },
+    { name: "elated", src: elatedEm },
+    { name: "french", src: frenchEm },
+    { name: "happy", src: happyEm },
+    { name: "sherlock", src: sherlockEm },
+  ];
 
-    return (
-      <>
-        <div className="em-container">
-          {smiles.map(({ name, src }) => {
-            return (
-              <div key={name} className="em-counter-img">
-                <img
-                  onClick={() => this.onClick(name)}
-                  className="em-img"
-                  src={src}
-                />
-                <span className="em-counter">
-                  <p>{this.state.count[name]}</p>
-                </span>
-              </div>
-            );
-          })}
-        </div>
-        <div className="secondary-button-container">
-          <button className="secondary button" onClick={this.clearResults}>
-            Clear results
-          </button>
-        </div>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <div className="em-container">
+        {smiles.map(({ name, src }) => {
+          return (
+            <div key={name} className="em-counter-img">
+              <img
+                onClick={() => increment(name)}
+                className="em-img"
+                src={src}
+              />
+              <span className="em-counter">
+                <p>{counter[name]}</p>
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      <div className="secondary-button-container">
+        <button className="secondary button" onClick={clearResults}>
+          Clear results
+        </button>
+      </div>
+    </>
+  );
+};
+
+export default Emojies;
